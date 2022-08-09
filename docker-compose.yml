@@ -1,0 +1,14 @@
+version: '3'
+volumes:
+  data:
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: django
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: django
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "9432:5432"
