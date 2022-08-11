@@ -8,6 +8,8 @@ class BillsUploadSerializer(serializers.Serializer):  # noqa
 
 
 class BillSerializer(serializers.ModelSerializer):
+    service_class = serializers.CharField(source='service_class.name')
+
     class Meta:
         model = BillInquiry
         exclude = ('id',)

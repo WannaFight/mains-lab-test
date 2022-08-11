@@ -10,6 +10,9 @@ class BillInquiry(models.Model):
                               help_text="Price of the service")
     date = models.DateField(help_text="Date when service has occurred")
     service = models.CharField(max_length=100, help_text="Service description")
+    service_class = models.ForeignKey('bills.ServiceClass', null=True,
+                                      related_name='bill_inquiries',
+                                      on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ('client_name',)

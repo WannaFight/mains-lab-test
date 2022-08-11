@@ -1,9 +1,11 @@
+import random
+
 import numpy as np
 import pandas as pd
 from django.conf import settings
 
 from bills.exceptions import DataFrameColumnsMismatch
-from bills.models import BillInquiry
+from bills.models import BillInquiry, ServiceClass
 
 
 def _process_service_column(df: pd.DataFrame) -> pd.DataFrame:
@@ -57,5 +59,11 @@ def process_bills_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 def create_bill_inquiries_from_df(df: pd.DataFrame) -> None:
     """Create ``BillInquiry`` instances from given dataframe"""
     bill_inquiries_data = df.to_dict('records')
-    to_create = [BillInquiry(**data) for data in bill_inquiries_data]
+    service_class_ids = ServiceClass.objects.values_list('pk', flat=True)
+    to_create = [
+        BillInquiry(
+            **data,
+            service_class_id=random.choice(service_class_ids) or None
+        ) for data in bill_inquiries_data
+    ]
     BillInquiry.objects.bulk_create(to_create, batch_size=len(to_create))
