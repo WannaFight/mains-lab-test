@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,11 +82,11 @@ WSGI_APPLICATION = "mainsLabTest.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'django',
-        "PORT": 9432,
-        "HOST": 'localhost',
-        "USER": 'django',
-        "PASSWORD": 'django'
+        "NAME": os.getenv('DB_NAME', 'django'),
+        "USER": os.getenv('DB_USER', 'django'),
+        "PASSWORD": os.getenv('DB_PASSWORD', 'django'),
+        "HOST": os.getenv('DB_HOST', 'localhost'),
+        "PORT": os.getenv('DB_PORT', 9432)
     }
 }
 

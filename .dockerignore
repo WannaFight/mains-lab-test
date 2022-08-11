@@ -1,0 +1,6 @@
+venv/
+.git
+__pycache__
+.idea
+.DS_Store
+.ipynb_checkpoints
