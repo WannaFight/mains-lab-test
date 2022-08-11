@@ -16,6 +16,7 @@ class BillInquiry(models.Model):
 
     class Meta:
         ordering = ('client_name',)
+        unique_together = ('client_name', 'number')
 
 
 class ServiceClass(models.Model):

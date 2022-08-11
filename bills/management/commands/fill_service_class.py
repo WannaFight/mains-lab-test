@@ -1,4 +1,5 @@
 import json
+import logging
 
 from django.conf import settings
 from django.core.management import BaseCommand
@@ -6,8 +7,13 @@ from django.core.management import BaseCommand
 from bills.models import ServiceClass
 
 
+logger = logging.getLogger(__name__)
+
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        logger.info("Started filling ServiceClass based on json...")
+
         with open(settings.BASE_DIR / 'serviceClass.json', 'r') as f:
             service_class_data = json.load(f)
 
@@ -28,4 +34,7 @@ class Command(BaseCommand):
                 services_to_create,
                 batch_size=len(services_to_create)
             )
-            #  todo: logging hwo many created
+            logger.info(
+                f"Add {len(services_to_create)} new records to ServiceClass"
+            )
+        logger.info("Finished filling ServiceClass")
